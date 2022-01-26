@@ -15,6 +15,7 @@ const ThirdPage = ({navigation}) => {
             <Button title='Go to First Page'
             onPress={() => navigation.navigate("FirstPage")}/>
         </View>
+        <Text style={drawerStyle.textBottomStyle}>Thai-Nichi Institute of Technology</Text>
     </View>
 </SafeAreaView>
   );
