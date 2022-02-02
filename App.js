@@ -9,6 +9,7 @@ import SecondPage from './component/pages/secondpage';
 import ThirdPage from './component/pages/thirdpage';
 import {createDrawerNavigator} from "@react-navigation/drawer"
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import CustomSidebarMenu from './component/pages/customSidebarMenu';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -17,12 +18,14 @@ function firstScreenStack({navigation}){
   return(
        <Stack.Navigator initialRouteName="FirstPage"
           screenOptions = {{
-            headerStyle:{backgroundColor: "#24E3AD"},
+            headerStyle:{backgroundColor: "#020000"},
             headerTintColor:"white",
             headerTitleStyle:{fontWeight:"bold"},
             headerLeft: () => <NavigationDrawerStructure navigationProps={navigation} />
           }}>
           <Stack.Screen name='FirstPage' component={FirstPage}/>
+          <Stack.Screen name='SecondPage' component={SecondPage}/>
+          <Stack.Screen name='ThirdPage' component={ThirdPage}/>
         </Stack.Navigator>
   )
 }
@@ -31,7 +34,7 @@ function seccondScreenStack({navigation}){
   return (
     <Stack.Navigator initialRouteName="FirstPage"
     screenOptions = {{
-      headerStyle:{backgroundColor: "#24E3AD"},
+      headerStyle:{backgroundColor: "#020000"},
       headerTintColor:"white",
       headerTitleStyle:{fontWeight:"bold"},
       headerLeft: () => <NavigationDrawerStructure navigationProps={navigation} />
@@ -67,7 +70,9 @@ export default function App() {
     <View style={styles.container}>
       {/* <Text>This is Navigation Class NAJA</Text> */}
       <NavigationContainer>
-        <Drawer.Navigator>
+        <Drawer.Navigator
+        drawerContent= {(props) => (<CustomSidebarMenu {...props}/>)}
+        >
           <Drawer.Screen name='FirstDrawerPage' component={firstScreenStack}/> 
           <Drawer.Screen name='SecondDrawerPage' component={seccondScreenStack}/>
         </Drawer.Navigator>
