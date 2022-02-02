@@ -10,25 +10,31 @@ import ThirdPage from './component/pages/thirdpage';
 import {createDrawerNavigator} from "@react-navigation/drawer"
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import CustomSidebarMenu from './component/pages/customSidebarMenu';
+import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import { MaterialIcons } from '@expo/vector-icons';
+import HomeScreen from './component/pages/HomeScreen';
+import SettingScreen from './component/pages/SettingScreen';
+import Profile from './component/pages/Profile';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
+const Tab = createBottomTabNavigator();
 
-function firstScreenStack({navigation}){
-  return(
-       <Stack.Navigator initialRouteName="FirstPage"
-          screenOptions = {{
-            headerStyle:{backgroundColor: "#020000"},
-            headerTintColor:"white",
-            headerTitleStyle:{fontWeight:"bold"},
-            headerLeft: () => <NavigationDrawerStructure navigationProps={navigation} />
-          }}>
-          <Stack.Screen name='FirstPage' component={FirstPage}/>
-          <Stack.Screen name='SecondPage' component={SecondPage}/>
-          <Stack.Screen name='ThirdPage' component={ThirdPage}/>
-        </Stack.Navigator>
-  )
-}
+// function firstScreenStack({navigation}){
+//   return(
+//        <Stack.Navigator initialRouteName="FirstPage"
+//           screenOptions = {{
+//             headerStyle:{backgroundColor: "#020000"},
+//             headerTintColor:"white",
+//             headerTitleStyle:{fontWeight:"bold"},
+//             headerLeft: () => <NavigationDrawerStructure navigationProps={navigation} />
+//           }}>
+//           <Stack.Screen name='FirstPage' component={FirstPage}/>
+//           <Stack.Screen name='SecondPage' component={SecondPage}/>
+//           <Stack.Screen name='ThirdPage' component={ThirdPage}/>
+//         </Stack.Navigator>
+//   )
+// }
 
 function seccondScreenStack({navigation}){
   return (
@@ -65,21 +71,88 @@ const NavigationDrawerStructure = (props) => {
 
 }
 
+// export default function App() {
+//   return (
+//     <View style={styles.container}>
+//       {/* <Text>This is Navigation Class NAJA</Text> */}
+//       <NavigationContainer>
+//         <Drawer.Navigator
+//         drawerContent= {(props) => (<CustomSidebarMenu {...props}/>)}
+//         >
+//           <Drawer.Screen name='FirstDrawerPage' component={firstScreenStack}/> 
+//           <Drawer.Screen name='SecondDrawerPage' component={seccondScreenStack}/>
+//         </Drawer.Navigator>
+//       </NavigationContainer>
+//       <StatusBar style="auto" />
+//     </View>
+//   );
+// }
+
+
+const Home = () =>{
+  return (
+    <View style={{flex:1,justifyContent:"center",alignContent:"center"}}>
+      <Text>Hello</Text>
+    </View>
+  )
+}
+
+
+const Setting = () =>{
+  return (
+    <View style={{flex:1,justifyContent:"center",alignContent:"center"}}>
+      <Text style={{}}>Setting</Text>
+    </View>
+  )
+}
+
+function ScreenStack({navigation}) {
+  return (
+    <Stack.Navigator initialRouteName="FirstPage"
+    screenOptions = {{
+      headerStyle:{backgroundColor: "#020000"},
+      headerTintColor:"white",
+      headerTitleStyle:{fontWeight:"bold"},
+    }}>
+    <Stack.Screen name='SettingScreen' component={SettingScreen}/>
+    <Stack.Screen name='ProfileScreen' component={Profile}/>
+  </Stack.Navigator>
+  )
+}
+
 export default function App() {
   return (
     <View style={styles.container}>
-      {/* <Text>This is Navigation Class NAJA</Text> */}
       <NavigationContainer>
-        <Drawer.Navigator
-        drawerContent= {(props) => (<CustomSidebarMenu {...props}/>)}
-        >
-          <Drawer.Screen name='FirstDrawerPage' component={firstScreenStack}/> 
-          <Drawer.Screen name='SecondDrawerPage' component={seccondScreenStack}/>
-        </Drawer.Navigator>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+            console.log(color)
+            if (route.name === 'HomeScreen') {
+              iconName = focused
+                ? 'app-settings-alt'
+                : 'app-settings-alt';
+            } else if (route.name === 'SettingScreen') {
+              iconName = focused ? 'format-list-bulleted' : 'list-alt';
+            }
+
+            // You can return any component that you like here!
+            console.log(iconName)
+            return <MaterialIcons name={iconName} size={12} color={color} />;
+          },
+        })}
+        tabBarOptions ={{
+          tabBarActiveTintColor: '#020000',
+          InactiveTintColor: 'gray',
+        }}
+      >
+          <Tab.Screen name='HomeScreen' component={HomeScreen}/>
+          <Tab.Screen name='SettingScreen' component={ScreenStack}/>
+        </Tab.Navigator>
       </NavigationContainer>
-      <StatusBar style="auto" />
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
