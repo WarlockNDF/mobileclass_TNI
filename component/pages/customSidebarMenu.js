@@ -6,21 +6,19 @@ const CustomSidebarMenu = (props) => {
   return (
     <SafeAreaView style={{flex:1}}>
     {/*Top Image*/}
-    <Image source={require("../../assets/react_logo.png")}
-    style={styles.sideMenuProfileIcon}
-    />
+    <Text style={{marginLeft:15,marginTop:25,fontSize:25}}>เมนูหลัก</Text>
     <DrawerContentScrollView {...props}>
         <DrawerItemList {...props}/>
-        <DrawerItem
+        {/* <DrawerItem
             label={"Visit Us"}
             onPress={() => Linking.openURL("https://it.tni.ac.th")}
-        />
-        <View style={styles.customItem}>
+        /> */}
+        {/* <View style={styles.customItem}>
             <Text onPress={() => Linking.openURL("https://facebook.com")}>
                 Rate Us
             </Text>
             <Image source={require("../../assets/star_filled.png")} style={{width:30,height:30}}/>
-        </View>
+        </View> */}
     </DrawerContentScrollView>
     </SafeAreaView>
   );

@@ -15,38 +15,38 @@ import { MaterialIcons } from '@expo/vector-icons';
 import HomeScreen from './component/pages/HomeScreen';
 import SettingScreen from './component/pages/SettingScreen';
 import Profile from './component/pages/Profile';
+import Menu from './component/api/Menu';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 
-// function firstScreenStack({navigation}){
-//   return(
-//        <Stack.Navigator initialRouteName="FirstPage"
-//           screenOptions = {{
-//             headerStyle:{backgroundColor: "#020000"},
-//             headerTintColor:"white",
-//             headerTitleStyle:{fontWeight:"bold"},
-//             headerLeft: () => <NavigationDrawerStructure navigationProps={navigation} />
-//           }}>
-//           <Stack.Screen name='FirstPage' component={FirstPage}/>
-//           <Stack.Screen name='SecondPage' component={SecondPage}/>
-//           <Stack.Screen name='ThirdPage' component={ThirdPage}/>
-//         </Stack.Navigator>
-//   )
-// }
+function firstScreenStack({navigation}){
+  return(
+       <Stack.Navigator initialRouteName="HomeStack"
+          screenOptions = {{
+            headerStyle:{backgroundColor: "#020000"},
+            headerTintColor:"white",
+            headerTitleStyle:{fontWeight:"bold"},
+            headerLeft: () => <NavigationDrawerStructure navigationProps={navigation} />
+          }}>
+          <Stack.Screen name='HomeStack' component={HomeStack}/>
+          <Stack.Screen name='DetailedStack' component={DetailStack}/>
+        </Stack.Navigator>
+  )
+}
 
 function seccondScreenStack({navigation}){
   return (
-    <Stack.Navigator initialRouteName="FirstPage"
+    <Stack.Navigator initialRouteName="DetailedStack"
     screenOptions = {{
       headerStyle:{backgroundColor: "#020000"},
       headerTintColor:"white",
       headerTitleStyle:{fontWeight:"bold"},
       headerLeft: () => <NavigationDrawerStructure navigationProps={navigation} />
     }}>
-    <Stack.Screen name='SecondPage' component={SecondPage}/>
-    <Stack.Screen name='ThirdPage' component={ThirdPage}/>
+     <Stack.Screen name='HomeStack' component={HomeStack}/>
+    <Stack.Screen name='DetailedStack' component={DetailStack}/>
   </Stack.Navigator>
   )
 }
@@ -71,22 +71,22 @@ const NavigationDrawerStructure = (props) => {
 
 }
 
-// export default function App() {
-//   return (
-//     <View style={styles.container}>
-//       {/* <Text>This is Navigation Class NAJA</Text> */}
-//       <NavigationContainer>
-//         <Drawer.Navigator
-//         drawerContent= {(props) => (<CustomSidebarMenu {...props}/>)}
-//         >
-//           <Drawer.Screen name='FirstDrawerPage' component={firstScreenStack}/> 
-//           <Drawer.Screen name='SecondDrawerPage' component={seccondScreenStack}/>
-//         </Drawer.Navigator>
-//       </NavigationContainer>
-//       <StatusBar style="auto" />
-//     </View>
-//   );
-// }
+export default function App() {
+  return (
+    <View style={styles.container}>
+      {/* <Text>This is Navigation Class NAJA</Text> */}
+      <NavigationContainer>
+        <Drawer.Navigator
+        drawerContent= {(props) => (<Menu {...props}/>)}
+        >
+          <Drawer.Screen options={{title:"Home"}} name='FirstDrawerPage' component={firstScreenStack}/> 
+          <Drawer.Screen options={{title:"Product Detailed"}} name='SecondDrawerPage' component={seccondScreenStack}/>
+        </Drawer.Navigator>
+      </NavigationContainer>
+      <StatusBar style="auto" />
+    </View>
+  );
+}
 
 
 const Home = () =>{
@@ -120,40 +120,57 @@ function ScreenStack({navigation}) {
   )
 }
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-            console.log(color)
-            if (route.name === 'HomeScreen') {
-              iconName = focused
-                ? 'app-settings-alt'
-                : 'app-settings-alt';
-            } else if (route.name === 'SettingScreen') {
-              iconName = focused ? 'format-list-bulleted' : 'list-alt';
-            }
+// export default function App() {
+//   return (
+//     <View style={styles.container}>
+//       <NavigationContainer>
+//       <Tab.Navigator
+//         screenOptions={({ route }) => ({
+//           tabBarIcon: ({ focused, color, size }) => {
+//             let iconName;
+//             console.log(color)
+//             if (route.name === 'HomeScreen') {
+//               iconName = focused
+//                 ? 'app-settings-alt'
+//                 : 'app-settings-alt';
+//             } else if (route.name === 'SettingScreen') {
+//               iconName = focused ? 'format-list-bulleted' : 'list-alt';
+//             }
 
-            // You can return any component that you like here!
-            console.log(iconName)
-            return <MaterialIcons name={iconName} size={12} color={color} />;
-          },
-        })}
-        tabBarOptions ={{
-          tabBarActiveTintColor: '#020000',
-          InactiveTintColor: 'gray',
-        }}
-      >
-          <Tab.Screen name='HomeScreen' component={HomeScreen}/>
-          <Tab.Screen name='SettingScreen' component={ScreenStack}/>
-        </Tab.Navigator>
-      </NavigationContainer>
-    </View>
-  )
-}
+//             // You can return any component that you like here!
+//             console.log(iconName)
+//             return <MaterialIcons name={iconName} size={12} color={color} />;
+//           },
+//         })}
+//         tabBarOptions ={{
+//           tabBarActiveTintColor: '#020000',
+//           InactiveTintColor: 'gray',
+//         }}
+//       >
+//           <Tab.Screen name='HomeScreen' component={HomeScreen}/>
+//           <Tab.Screen name='SettingScreen' component={ScreenStack}/>
+//         </Tab.Navigator>
+//       </NavigationContainer>
+//     </View>
+//   )
+// }
+
+// export default function App() {
+
+//   return(
+//     <View>
+//       <NavigationContainer>
+//         <Drawer.Navigator
+//         initialRouteName='HomeStack'
+//         drawerContent={(props) => <CustomSidebarMenu {...props}/>}
+//         >
+//           <Drawer.Screen name='HomeStack' component={HomeStack}/>
+//           <Drawer.Screen name='ProductStack' component={DetailStack}/>
+//         </Drawer.Navigator>
+//       </NavigationContainer>
+//     </View>
+//   )
+// }
 
 const styles = StyleSheet.create({
   container: {

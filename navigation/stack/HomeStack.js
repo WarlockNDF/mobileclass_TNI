@@ -15,27 +15,27 @@ const IoniconsHeaderButton = (props) => (
 
 const HomeStack = ({navigation}) => {
 
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => (
-      <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
-        <Item title="register" iconName="ios-document-attach" onPress={() => alert('Register ทำไมบ้าบอที่สุด')} />
-      </HeaderButtons>
-      ),
-      headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
-        <Item title="search" iconName="ios-search" onPress={() => alert('Search ทำไมบ้าบอที่สุด')} />
-      </HeaderButtons>
-      )
-    });
-  }, [navigation]);
+  // React.useLayoutEffect(() => {
+  //   navigation.setOptions({
+  //     headerLeft: () => (
+  //     <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
+  //       <Item title="register" iconName="ios-document-attach" onPress={() => alert('Register ทำไมบ้าบอที่สุด')} />
+  //     </HeaderButtons>
+  //     ),
+  //     headerRight: () => (
+  //     <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
+  //       <Item title="search" iconName="ios-search" onPress={() => alert('Search ทำไมบ้าบอที่สุด')} />
+  //     </HeaderButtons>
+  //     )
+  //   });
+  // }, [navigation]);
 
   return (
     <View style={styles.container}>
         <Ionicons name="ios-home-sharp" size={24} color="black" />
         <Button
         title='HOME'
-        onPress={() => navigation.navigate('DetailStack')}
+        onPress={() => navigation.navigate('DetailedStack')}
         />
     </View>
   );
