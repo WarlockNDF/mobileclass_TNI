@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView, StyleSheet, Text, View,TouchableOpacity,Image } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View,TouchableOpacity,Image, Button } from 'react-native';
 import HomeStack from './navigation/stack/HomeStack';
 import DetailStack from './navigation/stack/DetailStack';
 import FirstPage from './component/pages/firstpage';
@@ -16,6 +16,8 @@ import HomeScreen from './component/pages/HomeScreen';
 import SettingScreen from './component/pages/SettingScreen';
 import Profile from './component/pages/Profile';
 import Menu from './component/api/Menu';
+import RegisterStack from './navigation/stack/RegisterStack';
+import { FontAwesome } from '@expo/vector-icons'; 
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -30,23 +32,32 @@ function firstScreenStack({navigation}){
             headerTitleStyle:{fontWeight:"bold"},
             headerLeft: () => <NavigationDrawerStructure navigationProps={navigation} />
           }}>
-          <Stack.Screen name='HomeStack' component={HomeStack}/>
-          <Stack.Screen name='DetailedStack' component={DetailStack}/>
+          <Stack.Screen options={{
+            headerRight: () => (
+              <FontAwesome 
+              name="registered" 
+              size={24} 
+              color="white"
+              onPress={() => navigation.navigate("RegisterStack")}
+              />
+            )
+          }} name='HomeStack' component={HomeStack}/>
+          <Stack.Screen name='RegisterStack' component={RegisterStack}/>
         </Stack.Navigator>
   )
 }
 
 function seccondScreenStack({navigation}){
   return (
-    <Stack.Navigator initialRouteName="DetailedStack"
+    <Stack.Navigator initialRouteName="HomeStack"
     screenOptions = {{
       headerStyle:{backgroundColor: "#020000"},
       headerTintColor:"white",
       headerTitleStyle:{fontWeight:"bold"},
       headerLeft: () => <NavigationDrawerStructure navigationProps={navigation} />
     }}>
-     <Stack.Screen name='HomeStack' component={HomeStack}/>
     <Stack.Screen name='DetailedStack' component={DetailStack}/>
+    <Stack.Screen name='RegisterStack' component={RegisterStack}/>
   </Stack.Navigator>
   )
 }
