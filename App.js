@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView, StyleSheet, Text, View,TouchableOpacity,Image, Button } from 'react-native';
 import HomeStack from './navigation/stack/HomeStack';
-import DetailStack from './navigation/stack/DetailStack';
+import ProductStack from './navigation/stack/ProductStack';
 import FirstPage from './component/pages/firstpage';
 import SecondPage from './component/pages/secondpage';
 import ThirdPage from './component/pages/thirdpage';
@@ -16,8 +16,9 @@ import HomeScreen from './component/pages/HomeScreen';
 import SettingScreen from './component/pages/SettingScreen';
 import Profile from './component/pages/Profile';
 import Menu from './component/api/Menu';
-import RegisterStack from './navigation/stack/RegisterStack';
+import DetailedStack from './navigation/stack/DetailedStack';
 import { FontAwesome } from '@expo/vector-icons'; 
+import RegisterStack from './navigation/stack/RegisterStack';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -42,6 +43,8 @@ function firstScreenStack({navigation}){
               />
             )
           }} name='HomeStack' component={HomeStack}/>
+          <Stack.Screen name='DetailedStack' component={DetailedStack}/>
+          <Stack.Screen name='ProductStack' component={ProductStack}/>
           <Stack.Screen name='RegisterStack' component={RegisterStack}/>
         </Stack.Navigator>
   )
@@ -56,8 +59,8 @@ function seccondScreenStack({navigation}){
       headerTitleStyle:{fontWeight:"bold"},
       headerLeft: () => <NavigationDrawerStructure navigationProps={navigation} />
     }}>
-    <Stack.Screen name='DetailedStack' component={DetailStack}/>
-    <Stack.Screen name='RegisterStack' component={RegisterStack}/>
+    <Stack.Screen name='ProductStack' component={ProductStack}/>
+    <Stack.Screen name='DetailedStack' component={DetailedStack}/>
   </Stack.Navigator>
   )
 }

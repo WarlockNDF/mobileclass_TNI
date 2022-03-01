@@ -1,24 +1,45 @@
-import { StyleSheet, View, FlatList } from 'react-native';
+import { StyleSheet, View, FlatList, ActivityIndicator } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Container, Header, Content, List, ListItem, Thumbnail, Text, Left, Body, Right, Button, Badge } from 'native-base';
 import { getProduct } from '../../component/api/service/service';
+import { useFocusEffect } from '@react-navigation/native';
 
-const DetailStack = ({ navigation }) => {
+const ProductStack = ({ navigation }) => {
 
   const [product, setProduct] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(async () => {
+  const getData = async () => {
+    setLoading(true);
     await getProduct().then(res => {
       if (res.status != 200) alert("Pull Failed")
       if (!res.data.data) alert("No Data Found")
       setProduct(res.data.data)
+      setLoading(false)
       console.log(product)
     })
-    return
-  }, []);
+  }
 
+  useFocusEffect(
+    useCallback(() => {
+      getData();
+    },[]))
 
+  const _onRefresh = () => {
+    getData();
+  }
+
+  // useEffect(async () => {
+  //   getData();
+  //   return
+  // }, []);
+
+  if(loading){
+    <View style={styles.container}>
+      <ActivityIndicator color='blue' size="large"/>
+    </View>
+  }
 
   return (
     <View style={styles.container}>
@@ -36,8 +57,15 @@ const DetailStack = ({ navigation }) => {
       <FlatList
         data={product}
         keyExtractor={(data, idx) => data.id.toString()}
+        onRefresh={_onRefresh}
+        refreshing={loading}
         renderItem={({ item }) => (
-          <ListItem thumbnail>
+          <ListItem thumbnail
+          onPress={() => {navigation.navigate("DetailedStack", {
+            id: item.id,
+            title: item.title
+          })}}
+          >
             <Left>
               <Thumbnail square source={{ uri: item.picture }} />
             </Left>
@@ -57,7 +85,7 @@ const DetailStack = ({ navigation }) => {
   );
 };
 
-export default DetailStack;
+export default ProductStack;
 
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: 'center' }

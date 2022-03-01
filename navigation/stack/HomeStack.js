@@ -35,7 +35,7 @@ const HomeStack = ({navigation}) => {
         <Ionicons name="ios-home-sharp" size={24} color="black" />
         <Button
         title='HOME'
-        onPress={() => navigation.navigate('DetailedStack')}
+        onPress={() => navigation.navigate('ProductStack')}
         />
     </View>
   );
