@@ -3,6 +3,7 @@ import React from 'react'
 import { Container, Content, Input, Item, Label, Button, Form } from 'native-base'
 import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
+import axios from 'axios';
 
 
 const ValidateSchema = Yup.object().shape({
@@ -15,7 +16,7 @@ const ValidateSchema = Yup.object().shape({
       .required("กรุณาป้อนรหัสผ่าน"),
   });
   
-const RegisterStack = () => {
+const RegisterStack = ({navigation}) => {
     return (
         <Container>
         <Content padder>
@@ -28,14 +29,28 @@ const RegisterStack = () => {
             }}
             validationSchema={ValidateSchema}
             //เมื่อคลิก register (submit)
-            onSubmit={(values) => {
+            onSubmit={ async (values, {setSubmitting}) => {
               // same shape as initial values
               console.log(values);
+              const url = "https://api.codingthailand.com/api/register"
+              try {
+                const {status, data} = await axios.post(url,{
+                  name: values.name,
+                  email:values.email,
+                  password: values.password
+                })
+                alert(data.message)
+                navigation.navigate('HomeStack')
+              }catch (err) {
+                alert(err.message)
+              }finally {
+                setSubmitting(false)
+              }
             }}
           >
             {/* errors --> ใช้เช็ค error (State) เช่นิผู้ใช้ไม่กรอกข้อมูล จะให้ขึ้นอะไร */}
             {/* touched เมื่อ user กด name แล้วไปทำอย่างอื่นนอกช่อง โดยที่ยังไม่ใส่ข้อมูล */}
-            {({ errors, touched, values, handleChange, handleBlur }) => (
+            {({ errors, touched, values, handleChange, handleBlur, handleSubmit }) => (
               <Form>
                 <Item
                   fixedLabel
@@ -95,6 +110,7 @@ const RegisterStack = () => {
                   block
                   large
                   style={{ marginTop: 30, backgroundColor: "#654321" }}
+                  onPress={handleSubmit }
                 >
                   <Text
                     style={{ color: "white", fontSize: 15, fontWeight: "bold" }}

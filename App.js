@@ -19,6 +19,7 @@ import Menu from './component/api/Menu';
 import DetailedStack from './navigation/stack/DetailedStack';
 import { FontAwesome } from '@expo/vector-icons'; 
 import RegisterStack from './navigation/stack/RegisterStack';
+import Login from './navigation/stack/Login';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -46,6 +47,7 @@ function firstScreenStack({navigation}){
           <Stack.Screen name='DetailedStack' component={DetailedStack}/>
           <Stack.Screen name='ProductStack' component={ProductStack}/>
           <Stack.Screen name='RegisterStack' component={RegisterStack}/>
+          <Stack.Screen name='LoginStack' component={Login}/>
         </Stack.Navigator>
   )
 }
