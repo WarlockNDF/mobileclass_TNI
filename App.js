@@ -1,69 +1,70 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView, StyleSheet, Text, View,TouchableOpacity,Image, Button } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Image, Button } from 'react-native';
 import HomeStack from './navigation/stack/HomeStack';
 import ProductStack from './navigation/stack/ProductStack';
 import FirstPage from './component/pages/firstpage';
 import SecondPage from './component/pages/secondpage';
 import ThirdPage from './component/pages/thirdpage';
-import {createDrawerNavigator} from "@react-navigation/drawer"
+import { createDrawerNavigator } from "@react-navigation/drawer"
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import CustomSidebarMenu from './component/pages/customSidebarMenu';
-import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialIcons } from '@expo/vector-icons';
 import HomeScreen from './component/pages/HomeScreen';
 import SettingScreen from './component/pages/SettingScreen';
 import Profile from './component/pages/Profile';
 import Menu from './component/api/Menu';
 import DetailedStack from './navigation/stack/DetailedStack';
-import { FontAwesome } from '@expo/vector-icons'; 
+import { FontAwesome } from '@expo/vector-icons';
 import RegisterStack from './navigation/stack/RegisterStack';
 import Login from './navigation/stack/Login';
+import UserStoreProvider from './component/pages/Context/UserContext';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 
-function firstScreenStack({navigation}){
-  return(
-       <Stack.Navigator initialRouteName="HomeStack"
-          screenOptions = {{
-            headerStyle:{backgroundColor: "#020000"},
-            headerTintColor:"white",
-            headerTitleStyle:{fontWeight:"bold"},
-            headerLeft: () => <NavigationDrawerStructure navigationProps={navigation} />
-          }}>
-          <Stack.Screen options={{
-            headerRight: () => (
-              <FontAwesome 
-              name="registered" 
-              size={24} 
-              color="white"
-              onPress={() => navigation.navigate("RegisterStack")}
-              />
-            )
-          }} name='HomeStack' component={HomeStack}/>
-          <Stack.Screen name='DetailedStack' component={DetailedStack}/>
-          <Stack.Screen name='ProductStack' component={ProductStack}/>
-          <Stack.Screen name='RegisterStack' component={RegisterStack}/>
-          <Stack.Screen name='LoginStack' component={Login}/>
-        </Stack.Navigator>
+function firstScreenStack({ navigation }) {
+  return (
+    <Stack.Navigator initialRouteName="HomeStack"
+      screenOptions={{
+        headerStyle: { backgroundColor: "#020000" },
+        headerTintColor: "white",
+        headerTitleStyle: { fontWeight: "bold" },
+        headerLeft: () => <NavigationDrawerStructure navigationProps={navigation} />
+      }}>
+      <Stack.Screen options={{
+        headerRight: () => (
+          <FontAwesome
+            name="registered"
+            size={24}
+            color="white"
+            onPress={() => navigation.navigate("RegisterStack")}
+          />
+        )
+      }} name='HomeStack' component={HomeStack} />
+      <Stack.Screen name='DetailedStack' component={DetailedStack} />
+      <Stack.Screen name='ProductStack' component={ProductStack} />
+      <Stack.Screen name='RegisterStack' component={RegisterStack} />
+      <Stack.Screen name='LoginStack' component={Login} />
+    </Stack.Navigator>
   )
 }
 
-function seccondScreenStack({navigation}){
+function seccondScreenStack({ navigation }) {
   return (
     <Stack.Navigator initialRouteName="HomeStack"
-    screenOptions = {{
-      headerStyle:{backgroundColor: "#020000"},
-      headerTintColor:"white",
-      headerTitleStyle:{fontWeight:"bold"},
-      headerLeft: () => <NavigationDrawerStructure navigationProps={navigation} />
-    }}>
-    <Stack.Screen name='ProductStack' component={ProductStack}/>
-    <Stack.Screen name='DetailedStack' component={DetailedStack}/>
-  </Stack.Navigator>
+      screenOptions={{
+        headerStyle: { backgroundColor: "#020000" },
+        headerTintColor: "white",
+        headerTitleStyle: { fontWeight: "bold" },
+        headerLeft: () => <NavigationDrawerStructure navigationProps={navigation} />
+      }}>
+      <Stack.Screen name='ProductStack' component={ProductStack} />
+      <Stack.Screen name='DetailedStack' component={DetailedStack} />
+    </Stack.Navigator>
   )
 }
 
@@ -73,10 +74,10 @@ const NavigationDrawerStructure = (props) => {
     props.navigationProps.toggleDrawer();
   }
 
-  return(
-    <View style={{flexDirection:"row"}}>
+  return (
+    <View style={{ flexDirection: "row" }}>
       <TouchableOpacity onPress={() => toggleDrawer()}>
-      <MaterialCommunityIcons style={{marginLeft: 20}} name="account-details" size={26} color="white" />
+        <MaterialCommunityIcons style={{ marginLeft: 20 }} name="account-details" size={26} color="white" />
         {/* <Image
           source={"./assets/drawerWhite.png"}
           style={{width:25, height:25, marginLeft: 5}}
@@ -89,50 +90,52 @@ const NavigationDrawerStructure = (props) => {
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      {/* <Text>This is Navigation Class NAJA</Text> */}
-      <NavigationContainer>
-        <Drawer.Navigator
-        drawerContent= {(props) => (<Menu {...props}/>)}
-        >
-          <Drawer.Screen options={{title:"Home"}} name='FirstDrawerPage' component={firstScreenStack}/> 
-          <Drawer.Screen options={{title:"Product Detailed"}} name='SecondDrawerPage' component={seccondScreenStack}/>
-        </Drawer.Navigator>
-      </NavigationContainer>
-      <StatusBar style="auto" />
-    </View>
+    <UserStoreProvider>
+      <View style={styles.container}>
+        {/* <Text>This is Navigation Class NAJA</Text> */}
+        <NavigationContainer>
+          <Drawer.Navigator
+            drawerContent={(props) => (<Menu {...props} />)}
+          >
+            <Drawer.Screen options={{ title: "Home" }} name='FirstDrawerPage' component={firstScreenStack} />
+            <Drawer.Screen options={{ title: "Product Detailed" }} name='SecondDrawerPage' component={seccondScreenStack} />
+          </Drawer.Navigator>
+        </NavigationContainer>
+        <StatusBar style="auto" />
+      </View>
+    </UserStoreProvider>
   );
 }
 
 
-const Home = () =>{
+const Home = () => {
   return (
-    <View style={{flex:1,justifyContent:"center",alignContent:"center"}}>
+    <View style={{ flex: 1, justifyContent: "center", alignContent: "center" }}>
       <Text>Hello</Text>
     </View>
   )
 }
 
 
-const Setting = () =>{
+const Setting = () => {
   return (
-    <View style={{flex:1,justifyContent:"center",alignContent:"center"}}>
+    <View style={{ flex: 1, justifyContent: "center", alignContent: "center" }}>
       <Text style={{}}>Setting</Text>
     </View>
   )
 }
 
-function ScreenStack({navigation}) {
+function ScreenStack({ navigation }) {
   return (
     <Stack.Navigator initialRouteName="FirstPage"
-    screenOptions = {{
-      headerStyle:{backgroundColor: "#020000"},
-      headerTintColor:"white",
-      headerTitleStyle:{fontWeight:"bold"},
-    }}>
-    <Stack.Screen name='SettingScreen' component={SettingScreen}/>
-    <Stack.Screen name='ProfileScreen' component={Profile}/>
-  </Stack.Navigator>
+      screenOptions={{
+        headerStyle: { backgroundColor: "#020000" },
+        headerTintColor: "white",
+        headerTitleStyle: { fontWeight: "bold" },
+      }}>
+      <Stack.Screen name='SettingScreen' component={SettingScreen} />
+      <Stack.Screen name='ProfileScreen' component={Profile} />
+    </Stack.Navigator>
   )
 }
 

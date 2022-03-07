@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import { Container, Content, Input, Item, Label, Button, Form } from 'native-base'
 import { Formik, Field } from 'formik';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Yup from 'yup';
 import axios from 'axios';
 import React from 'react'
@@ -15,6 +16,18 @@ const ValidateSchema = Yup.object().shape({
 });
 
 const Login = ({ navigation }) => {
+
+    const getUser = async() => {
+        const userProfileUrl = "https://api.codingthailand.com/api/profile"
+        const token = await AsyncStorage.getItem("@access")
+        const {status, data} = await axios.get(userProfileUrl, {
+            headers:{
+                Authorization: 'Bearer '+ token
+            }
+        });
+        return data.data
+    }
+
     return (
         <Container>
             <Content padder>
@@ -35,7 +48,10 @@ const Login = ({ navigation }) => {
                                 email: values.email,
                                 password: values.password
                             })
-                            alert(data.access_token)
+                            await AsyncStorage.setItem("@access", data.access_token)
+                            const user = await getUser();
+                            alert(JSON.stringify(user.user))
+                            await AsyncStorage.setItem("@profile", JSON.stringify(user.user))
                             navigation.navigate('HomeStack')
                         } catch (err) {
                             alert(err.message)
